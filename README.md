@@ -87,25 +87,24 @@ Danny created Foodie-Fi with a data driven mindset and wanted to ensure all futu
        where plan_id !=3;
    ```
 12. Can you further breakdown this average value into 30 day periods (i.e. 0-30 days, 31-60 days etc)
- ```sql
-      SELECT 
+   ```sql
+       SELECT 
        CASE 
          WHEN days_difference >= 0 AND days_difference <= 30 THEN '0-30 days'
          WHEN days_difference > 30 AND days_difference <= 60 THEN '31-60 days'
          WHEN days_difference > 61 AND days_difference <= 90 THEN '61-90 days'
-         ELSE 'More than 90 days' 
-        END AS period,
-     COUNT(customer_id) AS No_of_customers,
-     AVG(days_difference) AS AVG_Days_to_reach_annual_program
-    FROM (
-         SELECT 
+         ELSE 'More than 90 days'  END AS period,
+         COUNT(customer_id) AS No_of_customers,
+         AVG(days_difference) AS AVG_Days_to_reach_annual_program
+        FROM (
+            SELECT 
             s2.customer_id,
                    DATEDIFF(
                         (SELECT MIN(start_date) FROM subscriptions AS s1 WHERE s1.customer_id = s2.customer_id AND plan_id = 3),
                         (SELECT MIN(start_date) FROM subscriptions AS s3 WHERE s3.customer_id = s2.customer_id)) AS days_difference
-    FROM subscriptions AS s2 WHERE plan_id != 3 AND plan_id != 4) AS differences
-    GROUP BY period
-    ORDER BY period;
+             FROM subscriptions AS s2 WHERE plan_id != 3 AND plan_id != 4) AS differences
+             GROUP BY period
+             ORDER BY period;
  ```
 13. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
    ```sql
