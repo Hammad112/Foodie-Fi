@@ -87,7 +87,7 @@ Danny created Foodie-Fi with a data driven mindset and wanted to ensure all futu
        where plan_id !=3;
    ```
 12. Can you further breakdown this average value into 30 day periods (i.e. 0-30 days, 31-60 days etc)
-   ```sql
+ ```sql
        SELECT 
        CASE 
          WHEN days_difference >= 0 AND days_difference <= 30 THEN '0-30 days'
@@ -112,7 +112,7 @@ Danny created Foodie-Fi with a data driven mindset and wanted to ensure all futu
        where plan_id =1
        and customer_id in 
        (select distinct customer_id from subscriptions where plan_id=2 and year(start_date)=2020);
-    ```
+   ```
 
 
 
